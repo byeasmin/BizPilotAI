@@ -1,0 +1,7 @@
+{
+  "name": "BizPilot",
+  "description": "Your AI-powered co-pilot for business success, offering idea validation, financial guidance, and strategic planning.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
