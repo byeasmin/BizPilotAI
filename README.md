@@ -53,6 +53,10 @@
 <p align="center"><i>BizPilot AI Feature page</i></p>
 
 
+---
+
+<img width="1892" height="870" alt="image" src="https://github.com/user-attachments/assets/104b932a-4a92-4135-ae04-ae387db1b318" />
+
 
 ---
 
@@ -209,6 +213,7 @@ npm run dev
 - Workflow: Frontend ↔ FastAPI Backend ↔ AI/ML Models
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 
