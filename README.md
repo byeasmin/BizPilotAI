@@ -15,6 +15,13 @@
 
 ---
 
+<p align="center" style="margin: 20px 0;">
+ <img src="Website_preview/Screenshot 2025-11-07 200322.png" alt="BizPilot AI" width="800"/>
+</p>
+<p align="center"><i>BizPilot AI Homepage</i></p>
+
+---
+
 ## 🧠 Project Overview
 
 BizPilot is a full-stack web application that acts as an AI-powered co-pilot for entrepreneurs.  
@@ -168,6 +175,7 @@ npm run dev
 - Workflow: Frontend ↔ Backend ↔ AI API
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 
