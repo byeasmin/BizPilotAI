@@ -132,7 +132,9 @@ OPENAI_API_KEY=YOUR_GEMINI_API_KEY_HERE
 ```
 uvicorn main:app --reload
 ```
+---
 ### Server runs at: http://localhost:8000
+---
 
 ---
 
@@ -142,7 +144,9 @@ cd frontend
 npm install
 npm run dev
 ```
+---
 ### Frontend runs at: http://localhost:5173
+---
 
 ---
 
@@ -164,6 +168,7 @@ npm run dev
 - Workflow: Frontend ↔ Backend ↔ AI API
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 
