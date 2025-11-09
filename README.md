@@ -154,6 +154,36 @@ Receives requests from frontend (`/generate-roadmap`) → Validates input → Us
 `React Frontend -> POST /generate-roadmap -> FastAPI Backend -> AI/ML Models -> Roadmap + Score -> Frontend`
 
 ---
+### 💡 Overview
+**BizPilot Stock Analysis Agent** is an **AI-powered Telegram automation** that performs real-time stock chart analysis and technical breakdowns using **Google Gemini AI** and integrated APIs.  
+It automatically fetches market charts, interprets them, and responds with professional technical summaries directly in Telegram.
+
+---
+
+### ⚙️ Workflow Highlights
+| Step | Description |
+|------|--------------|
+| 🟢 **Telegram Trigger** | Listens for messages or ticker symbols like `/stock AAPL` |
+| 🧠 **AI Agent (Gemini Model)** | Interprets the request and generates natural-language insights |
+| 📈 **Get Chart Tool** | Fetches live stock charts (via Chart-IMG API) |
+| 🧮 **Technical Analysis** | Analyzes price, MACD, RSI, and trends |
+| 📤 **Send Message / Photo** | Sends chart + analysis report back to Telegram |
+| 💾 **Memory** | Retains short-term context for follow-up analysis |
+
+---
+
+### 🧠 Example Output
+
+**User (Telegram):**  
+> `/stock AAPL`
+
+**Bot Response:**  
+> “📊 Apple’s stock has demonstrated consistent upward momentum over the recent period.  
+> There is clear support around **$170–$175**, and resistance near **$185–$190**.  
+> The price action suggests consolidation with a potential breakout ahead.”  
+
+
+---
 
 ## 📝 Setup Instructions
 
@@ -218,6 +248,7 @@ npm run dev
 - Workflow: Frontend ↔ FastAPI Backend ↔ AI/ML Models
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 
