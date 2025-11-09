@@ -1,54 +1,125 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BizPilot - Your AI Business Co-Pilot</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                DEFAULT: '#14B8A6',
-                '50': '#F0FDFA',
-                '100': '#CCFBF1',
-                '200': '#99F6E4',
-                '300': '#5EEAD4',
-                '400': '#2DD4BF',
-                '500': '#14B8A6',
-                '600': '#0D9488',
-                '700': '#0F766E',
-                '800': '#115E59',
-                '900': '#134E4A',
-              },
-              secondary: '#1A202C',
-              accent: '#F56565',
-            },
-          }
-        }
-      }
-    </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.552.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.5",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0",
-    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🇧🇩 স্মার্ট ট্যাক্স সহায়ক</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-  <body class="bg-gray-50">
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+<body class="bg-gray-900 text-white">
+
+<div class="max-w-xl mx-auto p-6">
+  <h1 class="text-3xl font-bold text-center mb-8">💰 বাংলাদেশ স্মার্ট ট্যাক্স সহায়ক</h1>
+
+  <!-- ফর্ম -->
+  <div class="mb-6">
+    <input type="text" id="name" class="w-full p-3 bg-gray-800 text-white border-2 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="আপনার নাম লিখুন">
+  </div>
+  <div class="mb-6">
+    <input type="number" id="age" class="w-full p-3 bg-gray-800 text-white border-2 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="আপনার বয়স (বছর)">
+  </div>
+  <div class="mb-6">
+    <select id="profession" class="w-full p-3 bg-gray-800 text-white border-2 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+      <option value="">পেশা নির্বাচন করুন</option>
+      <option value="Salaried">বেতনভুক্ত</option>
+      <option value="Business">ব্যবসায়ী</option>
+      <option value="Freelancer">ফ্রিল্যান্সার</option>
+      <option value="Student">ছাত্র/ছাত্রী</option>
+      <option value="Other">অন্যান্য</option>
+    </select>
+  </div>
+  <div class="mb-6">
+    <textarea id="bankStatement" class="w-full p-3 bg-gray-800 text-white border-2 border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" rows="6" placeholder="এখানে আপনার ব্যাংক স্টেটমেন্ট পেস্ট করুন..."></textarea>
+  </div>
+
+  <button id="generateBtn" class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-md w-full mb-4">🧾 ট্যাক্স সারাংশ তৈরি করুন</button>
+
+  <!-- লোডিং -->
+  <div id="loading" class="flex justify-center items-center mt-6 hidden">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500 border-opacity-75"></div>
+  </div>
+
+  <!-- ফলাফল -->
+  <div id="result" class="mt-6 p-6 bg-gray-800 border-2 border-gray-700 rounded-lg shadow-lg"></div>
+
+  <!-- ডাউনলোড -->
+  <button id="downloadBtn" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md w-full mt-4 hidden">⬇️ সারাংশ ডাউনলোড করুন</button>
+
+  <!-- লগআউট -->
+  <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 text-white p-3 rounded-md w-full mt-6">🚪 লগআউট</button>
+</div>
+
+<script>
+let latestTaxSummary = "";
+
+document.getElementById('generateBtn').addEventListener('click', function() {
+  const name = document.getElementById('name').value.trim();
+  const age = parseInt(document.getElementById('age').value);
+  const profession = document.getElementById('profession').value;
+  const bankStatement = document.getElementById('bankStatement').value.trim();
+
+  const loadingDiv = document.getElementById('loading');
+  const resultDiv = document.getElementById('result');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  if (!name || !age || !profession || !bankStatement) {
+    alert("⚠️ সব ঘর পূরণ করুন!");
+    return;
+  }
+
+  loadingDiv.classList.remove('hidden');
+  resultDiv.innerHTML = '';
+  downloadBtn.classList.add('hidden');
+
+  fetch("http://127.0.0.1:8000/generate-tax-summary", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      user_name: name,
+      age: age,
+      profession: profession,
+      bank_statement: bankStatement
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const summaryContent = data.tax_summary;
+    latestTaxSummary = summaryContent;
+    const htmlContent = marked.parse(summaryContent);
+    loadingDiv.classList.add('hidden');
+    resultDiv.innerHTML = `
+      <div class="bg-green-100 text-green-800 p-6 rounded-lg">
+        <h2 class="text-xl font-bold mb-2">📄 আপনার ট্যাক্স সারাংশ:</h2>
+        <div class="prose max-w-full">${htmlContent}</div>
+      </div>
+    `;
+    downloadBtn.classList.remove('hidden');
+  })
+  .catch(error => {
+    loadingDiv.classList.add('hidden');
+    resultDiv.innerHTML = "❌ সার্ভারে সংযোগ সম্ভব হয়নি।";
+  });
+});
+
+document.getElementById('downloadBtn').addEventListener('click', function() {
+  if (!latestTaxSummary) return alert("⚠️ কোনো সারাংশ নেই ডাউনলোড করার মতো!");
+
+  const blob = new Blob([latestTaxSummary], { type: "text/markdown" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tax_summary_bd.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('logoutBtn').addEventListener('click', function() {
+  window.location.href = 'login.html';
+});
+</script>
+
+</body>
 </html>

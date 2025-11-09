@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>An AI-powered platform to validate your business ideas, generate roadmaps, and guide you through the entrepreneurial journey.</b><br/>
-  <i>Built with React, FastAPI, and the Google Gemini API.</i>
+  <i>Built with React, FastAPI, Python AI/ML, and Google Gemini API.</i>
 </p>
 
 <p align="center">
@@ -52,6 +52,10 @@
 </p>
 <p align="center"><i>BizPilot AI Feature page</i></p>
 
+
+---
+
+<img width="1892" height="870" alt="image" src="https://github.com/user-attachments/assets/104b932a-4a92-4135-ae04-ae387db1b318" />
 
 
 ---
@@ -121,28 +125,28 @@ User interacts with UI (Dashboard, AI Chat, Investors, Tax, Learning Hub) → Re
 
 ---
 
-### 🧩 Backend (FastAPI + SQLModel)
+### 🧩 Backend (FastAPI + Python AI/ML)
 
-- FastAPI – REST API endpoints  
-- SQLModel / SQLite – Database for Users, Transactions, Investors, Business Scores  
-- Pydantic – Data validation  
-- JWT – Authentication  
-- CORS Middleware – Allow frontend requests  
-- OpenAI / Google Gemini API – AI integration  
+- FastAPI – REST API endpoints
+- Transformers (Hugging Face) – AI text generation for roadmaps
+- Scikit-learn – ML-based feasibility scoring
+- Pydantic – Data validation
+- CORS Middleware – Allow frontend requests
+- Google Gemini API – AI integration
 
-**Backend workflow:**  
-Receives requests from frontend (`/auth`, `/transactions`, `/dashboard`, `/investors`, `/tax`, `/ai/chat`) → Validates input → Performs database operations → Generates AI responses → Returns JSON.
+**Backend workflow:**
+Receives requests from frontend (`/generate-roadmap`) → Validates input → Uses AI/ML models to generate roadmaps and scores → Returns JSON with roadmap and feasibility score.
 
 ---
 
-### 🤖 AI Integration (Google Gemini / LLM)
+### 🤖 AI Integration (Python AI/ML + Google Gemini)
 
-- **Endpoint:** `/ai/chat`  
-- **Backend:** Sends user messages to Google Gemini API (or dummy AI)  
-- **Frontend:** Receives streaming response and renders progressively  
+- **Endpoint:** `/generate-roadmap`
+- **Backend:** Uses Hugging Face Transformers for AI text generation and scikit-learn for ML feasibility scoring
+- **Frontend:** Sends idea details, receives roadmap with feasibility score
 
-**Flow:**  
-`React Frontend -> POST /ai/chat -> FastAPI Backend -> Google Gemini API -> Response -> Frontend`
+**Flow:**
+`React Frontend -> POST /generate-roadmap -> FastAPI Backend -> AI/ML Models -> Roadmap + Score -> Frontend`
 
 ---
 
@@ -193,22 +197,23 @@ npm run dev
 
 ## ⚙️ How It Works
 
-1.  User logs in / signs up → JWT token stored in localStorage
-2.  Frontend sends API requests → Backend endpoints: `/transactions`, `/dashboard/summary`, `/investors`, `/tax/calculate`, `/ai/chat`
-3.  Backend authenticates, validates, fetches data from SQLite
-4.  AI Chat requests forwarded to Google Gemini API → Response streamed back to frontend
-5.  Frontend updates UI in real-time (dashboard cards, charts, chat bubbles, notifications)
+1.  User enters business idea details on the AI-powered idea validation page
+2.  Frontend sends POST request to `/generate-roadmap` with idea, category, target audience
+3.  Backend uses AI/ML models (Transformers for text generation, scikit-learn for scoring) to generate roadmap and feasibility score
+4.  Backend returns JSON with roadmap text and feasibility score
+5.  Frontend displays the AI-generated roadmap with feasibility score to the user
 
 ---
 
 ## ✅ Summary
 
 - Frontend: React, Vite, Tailwind, Axios, JWT, Recharts
-- Backend: FastAPI, SQLModel/SQLite, JWT, Pydantic, CORS
-- AI: Google Gemini API / LLM integration for idea validation & business advice
-- Workflow: Frontend ↔ Backend ↔ AI API
+- Backend: FastAPI, Transformers, Scikit-learn, Pydantic, CORS
+- AI/ML: Python-based AI text generation and ML feasibility scoring for business roadmaps
+- Workflow: Frontend ↔ FastAPI Backend ↔ AI/ML Models
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🔐 লগইন - স্মার্ট ট্যাক্স সহায়ক</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+
+<div class="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
+  <h2 class="text-3xl font-bold mb-6 text-center">🔐 লগইন করুন</h2>
+
+  <div class="mb-6">
+    <input id="email" type="email" placeholder="ইমেইল লিখুন" class="w-full p-3 bg-gray-700 text-white border-2 border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+  </div>
+  <div class="mb-6">
+    <input id="password" type="password" placeholder="পাসওয়ার্ড লিখুন" class="w-full p-3 bg-gray-700 text-white border-2 border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+  </div>
+
+  <div class="mb-6 flex items-center">
+    <input id="rememberMe" type="checkbox" class="form-checkbox text-green-500">
+    <label for="rememberMe" class="ml-2 text-gray-300">মনে রাখুন</label>
+  </div>
+
+  <button id="loginBtn" class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-md w-full">লগইন</button>
+
+  <p id="message" class="mt-4 text-center"></p>
+
+  <p class="text-center mt-4 text-gray-400">একাউন্ট নেই? <a href="signup.html" class="text-green-400 underline">সাইন আপ করুন</a></p>
+</div>
+
+<script>
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const rememberMe = document.getElementById('rememberMe').checked;
+  const messageDiv = document.getElementById('message');
+  let users = JSON.parse(localStorage.getItem('user_vector_store')) || [];
+  const passwordHash = await hashPassword(password);
+  const user = users.find(u => u.email === email && u.passwordHash === passwordHash);
+
+  if (user) {
+    messageDiv.textContent = "✅ লগইন সফল!";
+    messageDiv.className = "text-green-500 text-center";
+    sessionStorage.setItem('loggedInUser', JSON.stringify({ email }));
+    if (rememberMe) localStorage.setItem('rememberMeToken', btoa(email));
+    setTimeout(() => window.location.href = "index.html", 1000);
+  } else {
+    messageDiv.textContent = "❌ ভুল ইমেইল বা পাসওয়ার্ড!";
+    messageDiv.className = "text-red-500 text-center";
+  }
+});
+</script>
+
+</body>
+</html>

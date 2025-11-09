@@ -1,29 +1,6 @@
-import { GoogleGenAI, Chat } from "@google/genai";
-
-// Ensure the API key is available in the environment variables
-if (!process.env.API_KEY) {
-  // In a real app, you'd handle this more gracefully.
-  // For this context, we'll log an error.
-  console.error("API_KEY environment variable not set.");
-}
-
-const systemInstruction = "You are BizPilot, an expert business advisor specializing in the startup ecosystem, tax laws, and registration processes in Bangladesh. Your goal is to provide a clear, actionable, step-by-step roadmap for entrepreneurs. Use markdown for clear formatting, including headings, lists, and bold text. Make your advice practical and specific to Bangladesh.";
-
-let chat: Chat;
-
-function getChatSession(): Chat {
-    if (!chat) {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
-        chat = ai.chats.create({
-            model: "gemini-2.5-pro",
-            config: {
-                systemInstruction: systemInstruction,
-                temperature: 0.7,
-                topP: 0.95,
-            },
-        });
-    }
-    return chat;
+interface RoadmapResponse {
+  roadmap: string;
+  feasibility_score: number;
 }
 
 export async function generateRoadmapStream(
@@ -32,21 +9,53 @@ export async function generateRoadmapStream(
   onComplete?: () => void,
   onError?: (error: Error) => void
 ): Promise<void> {
-  const chatSession = getChatSession();
-
   try {
-    const responseStream = await chatSession.sendMessageStream({ message: prompt });
-    for await (const chunk of responseStream) {
-      onStream(chunk.text);
+    // Extract idea details from prompt (simple parsing)
+    const ideaMatch = prompt.match(/Idea: ([^\n]+)/);
+    const categoryMatch = prompt.match(/Category: ([^\n]+)/);
+    const audienceMatch = prompt.match(/Target Audience: ([^\n]+)/);
+
+    const idea = ideaMatch ? ideaMatch[1].trim() : '';
+    const category = categoryMatch ? categoryMatch[1].trim() : '';
+    const targetAudience = audienceMatch ? audienceMatch[1].trim() : '';
+
+    const response = await fetch('http://localhost:8000/generate-roadmap', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idea,
+        category,
+        target_audience: targetAudience,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data: RoadmapResponse = await response.json();
+
+    // Simulate streaming by splitting the response into chunks
+    const roadmapText = data.roadmap;
+    const chunks = roadmapText.split(' ');
+
+    for (const chunk of chunks) {
+      onStream(chunk + ' ');
+      await new Promise(resolve => setTimeout(resolve, 50)); // Simulate delay
+    }
+
+    if (onComplete) {
+      onComplete();
     }
   } catch (error) {
-    console.error("Error calling Gemini API:", error);
-    const errorMessage = "I'm sorry, but I encountered an issue while generating the roadmap. Please check your connection or API key and try again.";
+    console.error('Error generating roadmap:', error);
+    const errorMessage = "I'm sorry, but I encountered an issue while generating the roadmap. Please ensure the backend is running.";
     onStream(errorMessage);
     if (onError) {
-        onError(error instanceof Error ? error : new Error(String(error)));
+      onError(error instanceof Error ? error : new Error(String(error)));
     }
-  } finally {
     if (onComplete) {
       onComplete();
     }
