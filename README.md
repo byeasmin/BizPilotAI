@@ -37,6 +37,22 @@
 </p>
 <p align="center"><i>BizPilot AI Footer Section</i></p>
 
+<p align="center" style="margin: 20px 0;">
+ <img src="Website_preview/Screenshot 2025-11-07 200820.png" alt="feature Page" width="800"/>
+</p>
+<p align="center"><i>BizPilot AI Feature page</i></p>
+
+<p align="center" style="margin: 20px 0;">
+ <img src="Website_preview/Screenshot 2025-11-07 200835.png" alt="Feature Page" width="800"/>
+</p>
+<p align="center"><i>BizPilot AI Feature page</i></p>
+
+<p align="center" style="margin: 20px 0;">
+ <img src="Website_preview/Screenshot 2025-11-07 200851.png" alt="Feature Page" width="800"/>
+</p>
+<p align="center"><i>BizPilot AI Feature page</i></p>
+
+
 
 ---
 
@@ -193,6 +209,7 @@ npm run dev
 - Workflow: Frontend ↔ Backend ↔ AI API
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 
