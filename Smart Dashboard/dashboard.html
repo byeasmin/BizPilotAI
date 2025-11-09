@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #2c3e50; }
+        .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+        input[type=text] { width: 300px; padding: 5px; }
+        button { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h1>BizBot AI - Smart Dashboard</h1>
+
+    <div class="card">
+        <h2>Financial Summary</h2>
+        <p>Income: $5000</p>
+        <p>Expense: $2000</p>
+        <p>Profit: $3000</p>
+        <p>AI Business Score: 85/100</p>
+    </div>
+
+    <div class="card">
+        <h2>Recent Transactions</h2>
+        <ul>
+            <li>Salary: +$3000</li>
+            <li>Office Rent: -$1000</li>
+            <li>Marketing: -$500</li>
+            <li>Freelance: +$2000</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>BizBot AI Chat</h2>
+        <form method="POST" action="/chat">
+            <input type="text" name="message" placeholder="Ask BizBot..." required/>
+            <button type="submit">Send</button>
+        </form>
+        {% if reply %}
+            <p><strong>BizBot:</strong> {{ reply }}</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>AI Score History</h2>
+        <ul>
+            <li>2025-11-01: 80</li>
+            <li>2025-11-02: 82</li>
+            <li>2025-11-03: 85</li>
+        </ul>
+    </div>
+</body>
+</html>
