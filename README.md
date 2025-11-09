@@ -15,10 +15,28 @@
 
 ---
 
+## 📸 App Screenshot
+
 <p align="center" style="margin: 20px 0;">
- <img src="Website_preview/Screenshot 2025-11-07 200322.png" alt="BizPilot AI" width="800"/>
+ <img src="Website_preview/Screenshot 2025-11-07 200322.png" alt="Home Page" width="800"/>
 </p>
 <p align="center"><i>BizPilot AI Homepage</i></p>
+
+<p align="center" style="margin: 20px 0;">
+ <img src="Website_preview/Screenshot 2025-11-07 200408.png" alt="Home Page" width="800"/>
+</p>
+<p align="center"><i>BizPilot AI Homepage</i></p>
+
+<p align="center" style="margin: 20px 0;">
+ <img src="Website_preview/Screenshot 2025-11-07 200613.png" alt="Home Page" width="800"/>
+</p>
+<p align="center"><i>BizPilot AI Homepage</i></p>
+
+<p align="center" style="margin: 20px 0;">
+ <img src="Website_preview/Screenshot 2025-11-07 200636.png" alt="Home Page" width="800"/>
+</p>
+<p align="center"><i>BizPilot AI Footer Section</i></p>
+
 
 ---
 
@@ -175,6 +193,7 @@ npm run dev
 - Workflow: Frontend ↔ Backend ↔ AI API
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 
