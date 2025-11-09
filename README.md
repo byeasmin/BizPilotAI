@@ -54,12 +54,14 @@
 
 
 ---
+---
+<h3 align="center">AI Powered Telegram Automation for Stock Analysis</h3>
 
 <img width="1892" height="870" alt="image" src="https://github.com/user-attachments/assets/104b932a-4a92-4135-ae04-ae387db1b318" />
 <img width="613" height="1280" alt="image" src="https://github.com/user-attachments/assets/c891c271-5803-40b6-b8fa-77c2264a99e9" />
 <img width="612" height="1280" alt="image" src="https://github.com/user-attachments/assets/4792c6d4-2c28-4029-a300-362bc9df7dcb" />
 
-<h3 align="center">AI Powered Telegram Automation for Stock Analysis</h3>
+
 
 
 ---
@@ -263,6 +265,7 @@ npm run dev
 - Workflow: Frontend ↔ FastAPI Backend ↔ AI/ML Models
 
 <p align="center"><i>BizPilot – AI-powered co-pilot for entrepreneurs, bridging ideas to execution.</i></p>
+
 
 
 
